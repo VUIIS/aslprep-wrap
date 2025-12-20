@@ -1,0 +1,39 @@
+BIDS info for ASL
+https://bids-specification.readthedocs.io/en/stable/modality-specific-files/magnetic-resonance-imaging-data.html#arterial-spin-labeling-perfusion-data
+
+
+File structure is
+
+sub-<label>/
+    ses-<label>/
+        perf/
+            sub-<label>_ses-<label>_acq-<label>_asl.json
+            sub-<label>_ses-<label>_acq-<label>_asl.nii.gz
+            sub-<label>_ses-<label>_acq-<label>_m0scan.json
+            sub-<label>_ses-<label>_acq-<label>_m0scan.nii.gz
+            sub-<label>_ses-<label>_acq-<label>_aslcontext.tsv
+
+subject, session from XNAT. acq label from scan ID of the ASL? E.g. 401? acq is optional here.
+
+
+Needed params for pCASL:
+
+asl.json
+   ArterialSpinLabelingType  REQD    'PCASL'
+*  PostLabelingDelay  REQD
+*  BackgroundSuppression  REQD
+   M0Type   REQD   'Separate'
+   TotalAcquiredPairs   REQD   (calculate)
+*  BackgroundSuppressionNumberPulses   REC
+*  BackgroundSuppressionPulseTime   REC
+*  LabelingDuration  REQD
+*  SliceTiming  required
+*  VascularCrushing   REC
+   RepetitionTimePreparation   needed by aslprep but is just the TR
+   LabelingDistance   REC   we have this in the exam card (is it measuring the right thing?) but not mentioned in my notes from Taylor
+
+
+m0scan.json
+   IntendedFor
+   SliceTiming  required
+
