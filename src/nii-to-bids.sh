@@ -42,6 +42,10 @@ add_slice_timing.py --img_niigz "${perf_dir}/${fstr}_m0scan.nii.gz" --slicetimin
 # Make ASL context file
 
 # Add IntendedFor to M0
+add_intendedfor.py \
+    --img_niigz "${perf_dir}/${fstr}_m0scan.nii.gz" \
+    --intendedfor "ses-${ses}/perf/${fstr}_asl.nii.gz"
+
 
 # Add other vars
     

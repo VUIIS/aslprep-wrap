@@ -3,11 +3,10 @@
 import argparse
 import json
 import nibabel
-import shutil
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--img_niigz')
-parser.add_argument('--slicetiming')
+parser.add_argument('--img_niigz', required=True)
+parser.add_argument('--slicetiming', required=True)
 args = parser.parse_args()
 
 # Get json
