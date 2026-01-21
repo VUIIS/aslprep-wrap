@@ -22,7 +22,7 @@ asl.json
    ArterialSpinLabelingType  REQD    'PCASL'
 *  PostLabelingDelay  REQD
 *  BackgroundSuppression  REQD
-*   M0Type   REQD   'Separate'
+*  M0Type   REQD   'Separate'
    TotalAcquiredPairs   REQD   (calculate)
 *  BackgroundSuppressionNumberPulses   REC
 *  BackgroundSuppressionPulseTime   REC
