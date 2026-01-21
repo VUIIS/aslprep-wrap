@@ -38,15 +38,16 @@ cp "${m0_json}" "${perf_dir}/${fstr}_m0scan.json"
 add_slice_timing.py --img_niigz "${perf_dir}/${fstr}_asl.nii.gz" --slicetiming Philips_ASCEND_k
 add_slice_timing.py --img_niigz "${perf_dir}/${fstr}_m0scan.nii.gz" --slicetiming Philips_ASCEND_k
 
-
-# Make ASL context file
-
 # Add IntendedFor to M0
 add_intendedfor.py \
     --img_niigz "${perf_dir}/${fstr}_m0scan.nii.gz" \
     --intendedfor "ses-${ses}/perf/${fstr}_asl.nii.gz"
 
+# Make ASL context file
+create_context_tsv.py \
+    --img_niigz "${perf_dir}/${fstr}_asl.nii.gz" \
+    --alternating \
+    --control_first
 
 # Add other vars
-    
 
