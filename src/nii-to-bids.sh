@@ -63,8 +63,12 @@ add_fields.py \
     --jsonfile "${perf_dir}/${fstr}_asl.json" \
     --M0Type Separate \
     --RepetitionTimePreparation 4.001 \
-    --PostLabelingDelay 1600 \
-    --ArterialSpinLabelingType PCASL
+    --PostLabelingDelay 1.6 \
+    --LabelingDuration 1.65 \
+    --BackgroundSuppression true \
+    --BackgroundSuppressionNumberPulses 2 \
+    --ArterialSpinLabelingType PCASL \
+    --TotalAcquiredPairs 30
 
 add_fields.py \
     --jsonfile "${perf_dir}/${fstr}_m0scan.json" \

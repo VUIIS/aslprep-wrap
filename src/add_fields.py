@@ -9,6 +9,10 @@ parser.add_argument('--M0Type')
 parser.add_argument('--RepetitionTimePreparation')
 parser.add_argument('--PostLabelingDelay')
 parser.add_argument('--ArterialSpinLabelingType')
+parser.add_argument('--LabelingDuration')
+parser.add_argument('--BackgroundSuppression')
+parser.add_argument('--BackgroundSuppressionNumberPulses')
+parser.add_argument('--TotalAcquiredPairs')
 args = parser.parse_args()
 
 with open(args.jsonfile) as f:
@@ -25,6 +29,18 @@ if args.PostLabelingDelay:
 
 if args.ArterialSpinLabelingType:
     jobj['ArterialSpinLabelingType'] = args.ArterialSpinLabelingType
+
+if args.LabelingDuration:
+    jobj['LabelingDuration'] = float(args.LabelingDuration)
+
+if args.BackgroundSuppression:
+    jobj['BackgroundSuppression'] = args.BackgroundSuppression
+
+if args.BackgroundSuppressionNumberPulses:
+    jobj['BackgroundSuppressionNumberPulses'] = int(args.BackgroundSuppressionNumberPulses)
+
+if args.TotalAcquiredPairs:
+    jobj['TotalAcquiredPairs'] = int(args.TotalAcquiredPairs)
 
 with open(args.jsonfile, 'w') as f:
     json.dump(jobj, f, indent=4)
