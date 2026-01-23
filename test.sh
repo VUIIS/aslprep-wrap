@@ -8,5 +8,5 @@ docker run \
     --output-spaces T1w MNI152NLin2009cAsym \
     --fs-subjects-dir /INPUTS/freesurfer720 \
     /OUTPUTS/aslBIDS_rev \
-    /OUTPUTS/results \
+    /OUTPUTS/results_rev \
     participant
