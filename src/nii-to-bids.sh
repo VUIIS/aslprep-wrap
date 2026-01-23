@@ -16,7 +16,7 @@ sub=001
 ses=001
 
 # BIDS dir
-bids_dir=$(pwd)/../OUTPUTS/aslBIDS_rev
+bids_dir=$(pwd)/../OUTPUTS/aslBIDS
 mkdir -p "${bids_dir}"
 
 # ASL data dirs
@@ -72,7 +72,7 @@ add_fields.py \
 
 add_fields.py \
     --jsonfile "${perf_dir}/${fstr}_m0scan.json" \
-    --RepetitionTimePreparation 4.001
+    --RepetitionTimePreparation 20.0
 
 
 # KeyError: "Metadata term 'RepetitionTimePreparation' unavailable for file /OUTPUTS/aslBIDS/sub-001/ses-001/perf/sub-001_ses-001_m0scan.nii.gz."
