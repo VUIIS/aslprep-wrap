@@ -7,6 +7,6 @@ docker run \
     pennlinc/aslprep:25.1.0 \
     --output-spaces T1w MNI152NLin2009cAsym \
     --fs-subjects-dir /INPUTS/freesurfer720 \
-    /OUTPUTS/aslBIDS \
+    /OUTPUTS/aslBIDS_rev \
     /OUTPUTS/results \
     participant

@@ -33,6 +33,7 @@ if abs(tr2-tr)>0.001:
 
 if args.slicetiming in ['Philips_ASCEND_k']:
     basetimes = [x / nslices * tr for x in range(0,nslices)]
+    basetimes.reverse()
     jobj['SliceEncodingDirection'] = 'k'
     jobj['SliceTiming'] = basetimes
 else:
