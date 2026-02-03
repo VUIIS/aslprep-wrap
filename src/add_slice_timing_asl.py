@@ -34,6 +34,7 @@ tr2 = jobj['RepetitionTime']
 if abs(tr2-tr)>0.001:
     raise Exception(f'TR in {jsonfile} does not match {args.fmri_niigz}')
 
+# Slices assumed centered in the time window after label + post-label delay
 acqwindow_begin = args.labeling_duration + args.post_labeling_delay
 acqwindow_end = tr
 slice_delta = (acqwindow_end - acqwindow_begin) / nslices
