@@ -3,10 +3,13 @@
 import argparse
 import json
 import nibabel
+import numpy
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--img_niigz', required=True)
-parser.add_argument('--slicetiming', required=True)
+parser.add_argument('--slice_encoding_direction', required=True)
+parser.add_argument('--labeling_duration', required=True, type=float)
+parser.add_argument('--post_labeling_delay', required=True, type=float)
 args = parser.parse_args()
 
 # Get json
@@ -31,12 +34,10 @@ tr2 = jobj['RepetitionTime']
 if abs(tr2-tr)>0.001:
     raise Exception(f'TR in {jsonfile} does not match {args.fmri_niigz}')
 
-if args.slicetiming in ['Philips_ASCEND_k']:
-    basetimes = [x / nslices * tr for x in range(0,nslices)]
-    jobj['SliceEncodingDirection'] = 'k'
-    jobj['SliceTiming'] = basetimes
-else:
-    raise Exception(f'Cannot handle slice timing of {args.slicetiming}')
+acqwindow_begin = args.labeling_duration + args.post_labeling_delay
+acqwindow_end = tr
+slice_delta = (acqwindow_end - acqwindow_begin) / nslices
+basetimes = numpy.linspace(acqwindow_begin+slice_delta/2, acqwindow_end-slice_delta/2, num=nslices)
 
 ## Save it to original filename
 with open(jsonfile, 'w') as f:

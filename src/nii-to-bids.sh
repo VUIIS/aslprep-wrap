@@ -34,9 +34,19 @@ cp "${asl_json}" "${perf_dir}/${fstr}_asl.json"
 cp "${m0_niigz}" "${perf_dir}/${fstr}_m0scan.nii.gz"
 cp "${m0_json}" "${perf_dir}/${fstr}_m0scan.json"
 
-# Add slice timing to ASL, M0
-add_slice_timing.py --img_niigz "${perf_dir}/${fstr}_asl.nii.gz" --slicetiming Philips_ASCEND_k
-#add_slice_timing.py --img_niigz "${perf_dir}/${fstr}_m0scan.nii.gz" --slicetiming Philips_ASCEND_k
+# Add slice timing to ASL
+#   Slice order can be determined from a few exam card fields. E.g.
+#
+#        patientOrientation   :  PatientPos_HFS
+#        Slice orientation    :  TRANSVERSAL
+#        Slice scan order     :  ASCEND
+#
+#   Translates to k in BIDS terms for a nifti that's in RL / PA / IS data order.
+add_slice_timing_asl.py \
+    --img_niigz "${perf_dir}/${fstr}_asl.nii.gz" \
+    --slice_encoding_direction k \
+    --labeling_duration 1.65 \
+    --post_labeling_delay 1.6
 
 # Add IntendedFor to M0
 add_intendedfor.py \
@@ -68,7 +78,8 @@ add_fields.py \
     --BackgroundSuppression true \
     --BackgroundSuppressionNumberPulses 2 \
     --ArterialSpinLabelingType PCASL \
-    --TotalAcquiredPairs 30
+    --TotalAcquiredPairs 30 \
+    --LabelingDistance -90
 
 add_fields.py \
     --jsonfile "${perf_dir}/${fstr}_m0scan.json" \

@@ -13,6 +13,7 @@ parser.add_argument('--LabelingDuration')
 parser.add_argument('--BackgroundSuppression')
 parser.add_argument('--BackgroundSuppressionNumberPulses')
 parser.add_argument('--TotalAcquiredPairs')
+parser.add_argument('--LabelingDistance')
 args = parser.parse_args()
 
 with open(args.jsonfile) as f:
@@ -41,6 +42,9 @@ if args.BackgroundSuppressionNumberPulses:
 
 if args.TotalAcquiredPairs:
     jobj['TotalAcquiredPairs'] = int(args.TotalAcquiredPairs)
+
+if args.LabelingDistance:
+    jobj['LabelingDistance'] = float(args.LabelingDistance)
 
 with open(args.jsonfile, 'w') as f:
     json.dump(jobj, f, indent=4)
