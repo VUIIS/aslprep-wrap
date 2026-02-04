@@ -1,7 +1,8 @@
 # Setting up ASLprep for Philips scans
 
 ## Exam card
-Here are the relevant excerpts from the ASL exam card for an example scan:
+Here are the relevant excerpts from the ASL exam card for an example scan, along with how they
+translate to the BIDS .json format sidecar:
 
     EXAM CARD PARAMS                                             BIDS SIDECAR PARAMS
     
@@ -26,61 +27,30 @@ Here are the relevant excerpts from the ASL exam card for an example scan:
           back. supp. pulses  :       1710 2860 0 0 0            BackgroundSuppressionNumberPulses   2        (count non-zero values)
     
     =======INFO==========================================
-    Act. TR/TE (ms)  :                4001 / 16 
-    Dyn. scan time  :                 00:08.0 
+    Act. TR/TE (ms)  :                4001 / 16                  RepetitionTimePreparation           4.001    (convert from msec to sec)
+    Dyn. scan time  :                 00:08.0                    (Dyn scan time includes label AND control, so ignore it)
     Time to k0  :                     00:04.0 
 
-And the M0 exam card:
+And for the M0 exam card (only `RepetitionTimePreparation` is needed):
 
     =======INFO==========================================
-    Act. TR/TE (ms)  :                20000 / 13 
+    Act. TR/TE (ms)  :                20000 / 13                 RepetitionTimePreparation           20       (convert from msec to sec)
 
-
-## RepetitionTimePreparation
-Needed for both ASL series and M0 image. Just copy from the TR. Don't get sidetracked by the 
-Dynamic Scan Time field in the Philips ASL exam card, which reports the total for one control 
-PLUS one label scan.
 
 ## SliceEncodingDirection
-Slice order can be determined from a few exam card fields. E.g.
+Slice encoding direction can be determined from a few exam card fields. E.g.
 
     patientOrientation   :  PatientPos_HFS
     Slice orientation    :  TRANSVERSAL
     Slice scan order     :  ASCEND
 
 This is head-first supine positioning, axial slices, ascending slice order. It translates to the positive
-direction on the third voxel axis ('k' for SliceEncodingDirection in BIDS terms) for a Nifti file that's
+direction on the third voxel axis (`k` for `SliceEncodingDirection` in BIDS terms) for a Nifti file that's
 in RL / PA / IS data order.
 
 ## SliceTiming
-Slices are assumed centered in the time window after LabelingDuration + PostLabelingDelay.
+Slices are assumed centered in the time window after `LabelingDuration + PostLabelingDelay`.
 See `add_slice_timing_asl.py` for details.
-
-
-## ArterialSpinLabelingType
-From `Arterial Spin labeling` line of the exam card. In this case `pCASL` in the exam card 
-translates to `PCASL` for BIDS.
-
-## PostLabelingDelay
-From `label delay (ms)` in the exam card. Must be converted from msec to sec, e.g. in this example
-the value for the BIDS sidecar is `1.6`.
-
-## LabelingDuration
-From `label duration` in the exam card. Must be converted from msec to sec, e.g. in this example
-the value for the BIDS sidecar is `1.65`.
-
-## BackgroundSuppression
-From `back. supp.` in the exam card. In this case `YES` translates to `true` for the BIDS sidecar.
-
-## BackgroundSuppressionNumberPulses
-From `back. supp. pulses` in the exam card. Count the non-zero values - in this case `2`.
-
-## TotalAcquiredPairs
-30
-
-## LabelingDistance
--93
-
 
 
 ## Dataset description file
@@ -88,9 +58,9 @@ From `back. supp. pulses` in the exam card. Count the non-zero values - in this 
 ## Context TSV file
 
 
-
 ## IntendedFor
 Must be set for the separate M0 image. Format is `ses-SESSION/perf/FILEPREFIX_asl.nii.gz`.
 
 ## M0Type
 `Separate` is the only option the current code here can handle.
+
