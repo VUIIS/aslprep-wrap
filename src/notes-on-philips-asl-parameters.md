@@ -14,7 +14,7 @@ Here are the relevant excerpts from the ASL exam card for an example scan:
     
     =======DYNANG========================================
     Dynamic study  :                  INDIVIDUAL
-        dyn scans  :                  30                         TotalAcquiredPairs                 30
+          dyn scans  :                30                         TotalAcquiredPairs                  30
     Arterial Spin labeling  :         pCASL                      ArterialSpinLabelingType            PCASL
           label type  :               PARALLEL
           label distance (mm)  :      93                         LabelingDistance                    -93      (negative due to "F"oot label location)
