@@ -62,13 +62,7 @@ create_context_tsv.py \
 # Dataset description
 echo '{"Name": "ASL data", "BIDSVersion": "1.10.1"}' > "${bids_dir}/dataset_description.json"
 
-
-# Add other vars - need to move this to python to have access to TR etc
-
-# KeyError: "Metadata term 'M0Type' unavailable for file /OUTPUTS/aslBIDS/sub-001/ses-001/perf/sub-001_ses-001_asl.nii.gz."
-# KeyError: 'RepetitionTimePreparation'
-# KeyError: 'PostLabelingDelay'
-# KeyError: 'ArterialSpinLabelingType'
+# Add other vars
 add_fields.py \
     --jsonfile "${perf_dir}/${fstr}_asl.json" \
     --M0Type Separate \
@@ -84,15 +78,5 @@ add_fields.py \
 add_fields.py \
     --jsonfile "${perf_dir}/${fstr}_m0scan.json" \
     --RepetitionTimePreparation 20.0
-
-
-# KeyError: "Metadata term 'RepetitionTimePreparation' unavailable for file /OUTPUTS/aslBIDS/sub-001/ses-001/perf/sub-001_ses-001_m0scan.nii.gz."
-# TR is 20000 for this scan, but is that the value to use?
-#
-#         TR      dyn scan time     time to k0
-# asl    4001               8.0            4.0
-#  m0   20000              20.0           10.0
-
-# Also, see above, is RepetitionTimePreparation 4 or 8 for the ASL itself?
 
 
