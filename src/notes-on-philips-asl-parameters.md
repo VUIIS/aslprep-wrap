@@ -66,9 +66,18 @@ Must be set for the separate M0 image. Format is `ses-SESSION/perf/FILEPREFIX_as
 ## Additional files
 
 ### Dataset description file
+Example minimum contents for `dataset_description.json` in the BIDS root:
+
+    {"Name": "ASL data", "BIDSVersion": "1.10.1"}
 
 ### Context TSV file
+Contents of the label file are scan specific, with a one-line header plus one row per volume. Example:
 
+    volume_type
+    control
+    label
+    control
+    label
+    ...
 
-
-
+See `create_context_tsv.py` for details.
