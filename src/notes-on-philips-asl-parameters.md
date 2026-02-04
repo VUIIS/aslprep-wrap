@@ -1,6 +1,7 @@
 # Setting up ASLprep for Philips scans
 
-## Exam card
+## For the ASL series BIDS sidecar
+
 Here are the relevant excerpts from the ASL exam card for an example scan, along with how they
 translate to the BIDS .json format sidecar:
 
@@ -31,13 +32,10 @@ translate to the BIDS .json format sidecar:
     Dyn. scan time  :                 00:08.0                    (Dyn scan time includes label AND control, so ignore it)
     Time to k0  :                     00:04.0 
 
-And for the M0 exam card (only `RepetitionTimePreparation` is needed):
+### M0Type
+`Separate` is the only option the current code here can handle.
 
-    =======INFO==========================================
-    Act. TR/TE (ms)  :                20000 / 13                 RepetitionTimePreparation           20       (convert from msec to sec)
-
-
-## SliceEncodingDirection
+### SliceEncodingDirection
 Slice encoding direction can be determined from a few exam card fields. E.g.
 
     patientOrientation   :  PatientPos_HFS
@@ -48,19 +46,29 @@ This is head-first supine positioning, axial slices, ascending slice order. It t
 direction on the third voxel axis (`k` for `SliceEncodingDirection` in BIDS terms) for a Nifti file that's
 in RL / PA / IS data order.
 
-## SliceTiming
+### SliceTiming
 Slices are assumed centered in the time window after `LabelingDuration + PostLabelingDelay`.
 See `add_slice_timing_asl.py` for details.
 
 
-## Dataset description file
 
-## Context TSV file
+## For the M0 scan BIDS sidecar
 
+From the M0 exam card, only `RepetitionTimePreparation` is needed:
 
-## IntendedFor
+    =======INFO==========================================
+    Act. TR/TE (ms)  :                20000 / 13                 RepetitionTimePreparation           20       (convert from msec to sec)
+
+### IntendedFor
 Must be set for the separate M0 image. Format is `ses-SESSION/perf/FILEPREFIX_asl.nii.gz`.
 
-## M0Type
-`Separate` is the only option the current code here can handle.
+
+## Additional files
+
+### Dataset description file
+
+### Context TSV file
+
+
+
 
