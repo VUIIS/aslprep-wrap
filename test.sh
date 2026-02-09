@@ -7,6 +7,6 @@ docker run \
     pennlinc/aslprep:25.1.0 \
     --output-spaces asl T1w MNI152NLin2009cAsym \
     --fs-subjects-dir /INPUTS/freesurfer720 \
-    /OUTPUTS/aslBIDS \
-    /OUTPUTS/results \
+    /OUTPUTS/aslBIDS-hipp \
+    /OUTPUTS/results-hipp \
     participant
