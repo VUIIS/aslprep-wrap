@@ -13,6 +13,8 @@ while [[ $# -gt 0 ]]; do
         export asl_niigz="$2"; shift; shift;;
     --m0_niigz)
         export m0_niigz="$2"; shift; shift;;
+    --freesurfer_dir)
+        export freesurfer_dir="$2"; shift; shift ;;
     --SliceEncodingDirection)
         export SliceEncodingDirection="$2"; shift; shift;;
     --LabelingDuration)
@@ -55,8 +57,12 @@ sub=${sub//_/}
 ses=${session_label//-/}
 ses=${ses//_/}
 
+# Rename FS subject dir
+mkdir -p /OUTPUTS/freesurfer
+mv "${freesurfer_dir}" /OUTPUTS/freesurfer/sub-${sub}
+
 # BIDS dir
-bids_dir=${out_dir}/aslBIDS
+bids_dir=${out_dir}/aslBIDSinput
 mkdir -p "${bids_dir}"
 
 # ASL data dirs

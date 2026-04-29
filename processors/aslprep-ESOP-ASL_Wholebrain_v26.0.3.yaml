@@ -1,0 +1,124 @@
+# BIDS conversion, then ASLPrep
+# Specific for the ESOP ASL_Wholebrain exam card - ASL params are hard coded
+# https://github.com/VUIIS/aslprep-wrap
+---
+procyamlversion: 3.0.0-dev.0
+description: aslprep - https://aslprep.readthedocs.io/en/latest/
+
+containers:
+  - name: aslprep
+    path: aslprep_26.0.3.sif
+    source: docker://pennlinc/aslprep:26.0.3
+
+requirements:
+  walltime: 2-0
+  memory: 24000
+
+jobtemplate: job_template_v3.txt
+
+inputs:
+    
+  xnat:
+    
+    filters:
+      - type: match
+        inputs: scan_t1,assr_fs/scan_t1
+
+    scans:
+
+      - name: scan_t1
+        types: 'cs_T1W_3D_TFE_32 channel'
+        keep_multis: first
+        skip_unusable: true
+        resources:
+          - {resource: NIFTI, fmatch: '*.nii.gz', fdest: t1.nii.gz}
+          - {resource: JSON, fmatch: '*.json', fdest: t1.json}
+
+      - name: scan_aslsource
+        types: 'WIP SOURCE - ASL_Wholebrain'
+        keep_multis: first
+        skip_unusable: true
+        resources:
+          - {resource: NIFTI, fmatch: '*.nii.gz', fdest: asl.nii.gz}
+          - {resource: JSON, fmatch: '*.json', fdest: asl.json}
+
+      - name: scan_aslm0
+        types: 'ASL_Wholebrain_M0'
+        keep_multis: first
+        skip_unusable: true
+        resources:
+          - {resource: NIFTI, fmatch: '*.nii.gz', fdest: m0.nii.gz}
+          - {resource: JSON, fmatch: '*.json', fdest: m0.json}
+          
+    assessors:
+      - name: assr_fs
+        types: freesurfer720
+        resources:
+          - {resource: SUBJECT, ftype: DIR, fdest: freesurfer}
+    
+    attrs:
+      - {varname: subject, object: session, attr: subject_label}
+      - {varname: session, object: session, attr: label}
+
+outputs:
+  - {path: aslBIDSinput, type: DIR, resource: aslBIDSinput}
+  - {path: aslresult, type: DIR, resource: aslresult}
+  - {path: HTML, type: DIR, resource: HTML}
+
+# Pre container may adjust subject/session labels to remove underscore, which is
+# not compatible with BIDS filenames. Thus {subject}, {session} dax vars are not
+# available after the pre section.
+pre:
+  type: singularity_exec
+  container: aslprep
+  args: >-
+    bash -c '
+    cd /OUTPUTS &&
+    curl -o asprep-wrap.tar.gz -L https://github.com/VUIIS/aslprep-wrap/archive/refs/tags/v1.0.0.tar.gz &&
+    tar -zxf asprep-wrap.tar.gz &&
+    mv asprep-wrap-* asprep-wrap &&
+    export PATH=/OUTPUTS/aslprep-wrap/src:\$PATH &&
+    pcasl-pre.sh
+    --t1_niigz /INPUTS/t1.nii.gz
+    --asl_niigz /INPUTS/asl.nii.gz
+    --m0_niigz /INPUTS/m0.nii.gz
+    --freesurfer_dir /INPUTS/freesurfer/SUBJECT
+    --SliceEncodingDirection k
+    --LabelingDuration 1.65
+    --PostLabelingDelay 1.6
+    --M0Type Separate
+    --RepetitionTimePreparationASL 4.001
+    --RepetitionTimePreparationM0 20.0
+    --BackgroundSuppression 'true'
+    --BackgroundSuppressionNumberPulses 2
+    --TotalAcquiredPairs 30
+    --LabelingDistance -90
+    --subject_label {subject}
+    --session_label {session}
+    --out_dir /OUTPUTS
+    '
+
+command:
+  type: singularity_run
+  container: aslprep
+  args: >-
+    --output-spaces asl T1w MNI152NLin2009cAsym
+    --fs-subjects-dir /OUTPUTS/freesurfer
+    /OUTPUTS/aslBIDSinput
+    /OUTPUTS/aslresult
+    participant
+  extraopts: --bind /data/mcr/centos7/FS6/license.txt:/opt/license.txt
+
+# Here we do some extra gymnastics to copy the full HTML output to HTML resource
+# without knowing the dirnames (due to changed subject label).
+post:
+  type: singularity_exec
+  container: aslprep
+  args: >-
+    bash -c '
+    mkdir /OUTPUTS/HTML &&
+    cp /OUTPUTS/aslresult/sub-*.html /OUTPUTS/HTML &&
+    cp -R /OUTPUTS/aslresult/sub-* /OUTPUTS/HTML &&
+    rm -fr /OUTPUTS/HTML/sub-*/ses-* &&
+    rm -fr /OUTPUTS/HTML/sub-*/log
+    '
