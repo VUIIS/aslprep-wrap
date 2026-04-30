@@ -40,6 +40,10 @@ acqwindow_end = tr
 slice_delta = (acqwindow_end - acqwindow_begin) / nslices
 basetimes = numpy.linspace(acqwindow_begin+slice_delta/2, acqwindow_end-slice_delta/2, num=nslices)
 
+# Update fields
+jobj['SliceEncodingDirection'] = args.slice_encoding_direction
+jobj['SliceTiming'] = basetimes
+
 ## Save it to original filename
 with open(jsonfile, 'w') as f:
     json.dump(jobj, f, indent=4)

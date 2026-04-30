@@ -35,7 +35,7 @@ if args.LabelingDuration:
     jobj['LabelingDuration'] = float(args.LabelingDuration)
 
 if args.BackgroundSuppression:
-    jobj['BackgroundSuppression'] = args.BackgroundSuppression
+    jobj['BackgroundSuppression'] = bool(args.BackgroundSuppression)
 
 if args.BackgroundSuppressionNumberPulses:
     jobj['BackgroundSuppressionNumberPulses'] = int(args.BackgroundSuppressionNumberPulses)

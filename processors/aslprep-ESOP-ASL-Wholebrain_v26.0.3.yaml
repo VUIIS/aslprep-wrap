@@ -89,7 +89,7 @@ pre:
     --M0Type Separate
     --RepetitionTimePreparationASL 4.001
     --RepetitionTimePreparationM0 20.0
-    --BackgroundSuppression 'true'
+    --BackgroundSuppression true
     --BackgroundSuppressionNumberPulses 2
     --TotalAcquiredPairs 30
     --LabelingDistance -90
