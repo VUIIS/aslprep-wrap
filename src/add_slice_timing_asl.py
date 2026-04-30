@@ -42,7 +42,7 @@ basetimes = numpy.linspace(acqwindow_begin+slice_delta/2, acqwindow_end-slice_de
 
 # Update fields
 jobj['SliceEncodingDirection'] = args.slice_encoding_direction
-jobj['SliceTiming'] = basetimes
+jobj['SliceTiming'] = basetimes.tolist()
 
 ## Save it to original filename
 with open(jsonfile, 'w') as f:
