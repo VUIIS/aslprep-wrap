@@ -74,7 +74,7 @@ pre:
   args: >-
     bash -c '
     cd /OUTPUTS &&
-    curl -o aslprep-wrap.tar.gz -L https://github.com/VUIIS/aslprep-wrap/archive/refs/tags/v1.0.3.tar.gz &&
+    curl -o aslprep-wrap.tar.gz -L https://github.com/VUIIS/aslprep-wrap/archive/refs/tags/v1.0.4.tar.gz &&
     tar -zxf aslprep-wrap.tar.gz &&
     mv aslprep-wrap-* aslprep-wrap &&
     export PATH=/OUTPUTS/aslprep-wrap/src:\$PATH &&
