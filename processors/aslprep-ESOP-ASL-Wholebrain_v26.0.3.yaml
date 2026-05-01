@@ -107,7 +107,7 @@ command:
     /OUTPUTS/aslBIDSinput
     /OUTPUTS/aslresult
     participant
-  extraopts: --bind /data/mcr/centos7/FS6/license.txt:/opt/license.txt
+  extraopts: --bind /data/mcr/centos7/FS6/license.txt:/opt/freesurfer/license.txt
 
 # Here we do some extra gymnastics to copy the full HTML output to HTML resource
 # without knowing the dirnames (due to changed subject label).
