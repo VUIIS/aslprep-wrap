@@ -59,7 +59,7 @@ ses=${ses//_/}
 
 # Rename FS subject dir
 mkdir -p /OUTPUTS/freesurfer
-mv "${freesurfer_dir}" /OUTPUTS/freesurfer/sub-${sub}
+mv "${freesurfer_dir}" /OUTPUTS/freesurfer/sub-${sub}_ses-${ses}
 
 # BIDS dir
 bids_dir=${out_dir}/aslBIDSinput
