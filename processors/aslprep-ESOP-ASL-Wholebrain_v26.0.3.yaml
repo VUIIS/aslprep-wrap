@@ -105,6 +105,7 @@ command:
     --work-dir /tmp
     --output-spaces asl T1w MNI152NLin2009cAsym
     --fs-subjects-dir /OUTPUTS/freesurfer
+    --fs-no-resume
     /OUTPUTS/aslBIDSinput
     /OUTPUTS/aslresult
     participant
