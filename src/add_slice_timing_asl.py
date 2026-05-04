@@ -38,7 +38,7 @@ if abs(tr2-tr)>0.001:
 acqwindow_begin = args.labeling_duration + args.post_labeling_delay
 acqwindow_end = tr
 slice_delta = (acqwindow_end - acqwindow_begin) / nslices
- = acqwindow_end - acqwindow_begin
+acqwindow_duration = acqwindow_end - acqwindow_begin
 basetimes = numpy.linspace(0, acqwindow_duration, num=nslices)
 
 # Update fields
