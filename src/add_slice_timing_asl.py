@@ -38,7 +38,8 @@ if abs(tr2-tr)>0.001:
 acqwindow_begin = args.labeling_duration + args.post_labeling_delay
 acqwindow_end = tr
 slice_delta = (acqwindow_end - acqwindow_begin) / nslices
-basetimes = numpy.linspace(acqwindow_begin+slice_delta/2, acqwindow_end-slice_delta/2, num=nslices)
+ = acqwindow_end - acqwindow_begin
+basetimes = numpy.linspace(0, acqwindow_duration, num=nslices)
 
 # Update fields
 jobj['SliceEncodingDirection'] = args.slice_encoding_direction
