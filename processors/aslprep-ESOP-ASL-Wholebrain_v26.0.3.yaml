@@ -103,7 +103,7 @@ command:
   container: aslprep
   args: >-
     --work-dir /tmp
-    --output-spaces asl T1w MNI152NLin2009cAsym
+    --output-spaces asl MNI152NLin2009cAsym
     --fs-subjects-dir /OUTPUTS/freesurfer
     --fs-no-resume
     /OUTPUTS/aslBIDSinput
@@ -119,15 +119,14 @@ post:
   container: aslprep
   args: >-
     bash -c '
-    
     mkdir /OUTPUTS/HTML &&
     cp /OUTPUTS/aslresult/sub-*.html /OUTPUTS/HTML &&
     cp -R /OUTPUTS/aslresult/sub-* /OUTPUTS/HTML &&
     rm -fr /OUTPUTS/HTML/sub-*/ses-*/anat &&
     rm -fr /OUTPUTS/HTML/sub-*/ses-*/log &&
     rm -fr /OUTPUTS/HTML/sub-*/ses-*/perf &&
-    rm -fr /OUTPUTS/HTML/sub-*/log &&
-    
-    rm -f /OUTPUTS/aslresult/sub-*/ses-*/perf/*_space-T1w_desc-timeseries_cbf.nii.gz &&
-    rm -f /OUTPUTS/aslresult/sub-*/ses-*/perf/*_space-T1w_desc-timeseries_cbf.json
+    rm -fr /OUTPUTS/HTML/sub-*/log
     '
+
+#    rm -f /OUTPUTS/aslresult/sub-*/ses-*/perf/*_space-T1w_desc-timeseries_cbf.nii.gz &&
+#    rm -f /OUTPUTS/aslresult/sub-*/ses-*/perf/*_space-T1w_desc-timeseries_cbf.json
