@@ -119,13 +119,21 @@ post:
   container: aslprep
   args: >-
     bash -c '
+    
     mkdir /OUTPUTS/HTML &&
     cp /OUTPUTS/aslresult/sub-*.html /OUTPUTS/HTML &&
     cp -R /OUTPUTS/aslresult/sub-* /OUTPUTS/HTML &&
     rm -fr /OUTPUTS/HTML/sub-*/ses-*/anat &&
     rm -fr /OUTPUTS/HTML/sub-*/ses-*/log &&
     rm -fr /OUTPUTS/HTML/sub-*/ses-*/perf &&
-    rm -fr /OUTPUTS/HTML/sub-*/log
+    rm -fr /OUTPUTS/HTML/sub-*/log &&
+    
+    FIXME HOW TO FIND THE SINGLE WANTED *_cbf.nii.gz file??
+    export PATH=/OUTPUTS/aslprep-wrap/src:\$PATH &&
+    apply_registration.sh 
+      --xfm_txt /OUTPUTS/aslresult/sub-*/ses-*/anat/*_from-aslref_to-T1w_mode-image_xfm.txt
+      --in_niigz /OUTPUTS/aslresult/sub-*/ses-*/perf/*_cbf.nii.gz
+      --out_dir /OUTPUTS
     '
 
 #    rm -f /OUTPUTS/aslresult/sub-*/ses-*/perf/*_space-T1w_desc-timeseries_cbf.nii.gz &&
