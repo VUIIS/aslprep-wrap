@@ -74,7 +74,7 @@ pre:
   args: >-
     bash -c '
     cd /OUTPUTS &&
-    curl -o aslprep-wrap.tar.gz -L https://github.com/VUIIS/aslprep-wrap/archive/refs/tags/v1.0.6.tar.gz &&
+    curl -o aslprep-wrap.tar.gz -L https://github.com/VUIIS/aslprep-wrap/archive/refs/tags/v1.0.7.tar.gz &&
     tar -zxf aslprep-wrap.tar.gz &&
     mv aslprep-wrap-* aslprep-wrap &&
     export PATH=/OUTPUTS/aslprep-wrap/src:\$PATH &&
@@ -113,7 +113,7 @@ command:
 
 # Here we do some extra gymnastics to copy the full HTML output to HTML resource
 # without knowing the dirnames (due to changed subject label).
-# Also, remove redundant huge resampled ASL time series in T1 grid.
+# Also, create a version of the CBF image with ASL voxel size that's aligned with T1.
 post:
   type: singularity_exec
   container: aslprep
@@ -128,13 +128,8 @@ post:
     rm -fr /OUTPUTS/HTML/sub-*/ses-*/perf &&
     rm -fr /OUTPUTS/HTML/sub-*/log &&
     
-    FIXME HOW TO FIND THE SINGLE WANTED *_cbf.nii.gz file??
     export PATH=/OUTPUTS/aslprep-wrap/src:\$PATH &&
     apply_registration.sh 
-      --xfm_txt /OUTPUTS/aslresult/sub-*/ses-*/anat/*_from-aslref_to-T1w_mode-image_xfm.txt
-      --in_niigz /OUTPUTS/aslresult/sub-*/ses-*/perf/*_cbf.nii.gz
+      --bids_dir /OUTPUTS/aslresult
       --out_dir /OUTPUTS
     '
-
-#    rm -f /OUTPUTS/aslresult/sub-*/ses-*/perf/*_space-T1w_desc-timeseries_cbf.nii.gz &&
-#    rm -f /OUTPUTS/aslresult/sub-*/ses-*/perf/*_space-T1w_desc-timeseries_cbf.json
