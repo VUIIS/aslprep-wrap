@@ -64,6 +64,7 @@ outputs:
   - {path: aslBIDSinput, type: DIR, resource: aslBIDSinput}
   - {path: aslresult, type: DIR, resource: aslresult}
   - {path: HTML, type: DIR, resource: HTML}
+  - {path: "*Reg2T1.nii.gz", type: FILE, resource: cbfReg2T1}
 
 # Pre container may adjust subject/session labels to remove underscore, which is
 # not compatible with BIDS filenames. Thus {subject}, {session} dax vars are not

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Apply an affine transform from aslprep xfm.txt to a nifti image
+# Apply an affine transform from aslprep xfm.txt to a nifti cbf image
 
 while [[ $# -gt 0 ]]; do
     key="$1"
@@ -14,12 +14,12 @@ done
 # Find transform and CBF files
 xfm_txt=$(find "${bids_dir}" -regextype sed -regex ".*/sub-[a-zA-Z0-9]*/ses-[a-zA-Z0-9]*/perf/sub-[a-zA-Z0-9]*_ses-[a-zA-Z0-9]*_from-aslref_to-T1w_mode-image_xfm\.txt")
 numlines=$(echo "${xfm_txt}"|wc -l)
-if [[ "${numlines}" != 1 ]];
+if [[ "${numlines}" != 1 ]]; then
     echo "ERROR: Wrong number of transforms found (${numlines})"
 fi
 cbf_niigz=$(find "${bids_dir}" -regextype sed -regex ".*/sub-[a-zA-Z0-9]*/ses-[a-zA-Z0-9]*/perf/sub-[a-zA-Z0-9]*_ses-[a-zA-Z0-9]*_cbf\.nii\.gz")
 numlines=$(echo "${cbf_niigz}"|wc -l)
-if [[ "${numlines}" != 1 ]];
+if [[ "${numlines}" != 1 ]]; then
     echo "ERROR: Wrong number of CBF images found (${numlines})"
 fi
 
