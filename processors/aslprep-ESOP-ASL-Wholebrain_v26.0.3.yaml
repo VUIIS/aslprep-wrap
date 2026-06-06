@@ -12,7 +12,7 @@ containers:
 
 requirements:
   walltime: 2-0
-  memory: 24000
+  memory: 48000
 
 jobtemplate: job_template_v3.txt
 
