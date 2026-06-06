@@ -27,7 +27,7 @@ inputs:
     scans:
 
       - name: scan_t1
-        types: 'cs_T1W_3D_TFE_32 channel'
+        types: cs_T1W_3D_TFE_32 channel,T1_PGPP
         keep_multis: first
         skip_unusable: true
         resources:
