@@ -27,7 +27,7 @@ inputs:
     scans:
 
       - name: scan_t1
-        types: cs_T1W_3D_TFE_32 channel,T1_PGPP
+        types: cs_T1W_3D_TFE_32 channel,T1_PGPP,T1
         keep_multis: first
         skip_unusable: true
         resources:
@@ -35,7 +35,7 @@ inputs:
           - {resource: JSON, fmatch: '*.json', fdest: t1.json}
 
       - name: scan_aslsource
-        types: 'WIP SOURCE - ASL_Wholebrain'
+        types: WIP SOURCE - ASL_Wholebrain,SOURCE - WIP ASL_BASELINE PGPP_6800ms
         keep_multis: first
         skip_unusable: true
         resources:
@@ -43,7 +43,7 @@ inputs:
           - {resource: JSON, fmatch: '*.json', fdest: asl.json}
 
       - name: scan_aslm0
-        types: 'ASL_Wholebrain_M0'
+        types: ASL_Wholebrain_M0,WIP ASL_M0 Ref
         keep_multis: first
         skip_unusable: true
         resources:
